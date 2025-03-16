@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\GlobalMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,9 +12,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // TODO
-        // REGISTER YOUR MIDDLEWARES HERE
-        // YOU CAN USE ALIAS, AND REMEMBER THE PRIORITIZATION OF APPLYING MIDDLEWARES
+        $middleware->alias([
+
+            'user' => GlobalMiddleware::class
+    
+        ]);
+        $middleware->alias([
+
+            'route' => RouteMiddleware::class
+    
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
